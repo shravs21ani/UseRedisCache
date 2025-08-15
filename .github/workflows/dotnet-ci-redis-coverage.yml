@@ -29,11 +29,14 @@ jobs:
 
     - name: Convert coverage to Cobertura format
       run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool
-          reportgenerator -reports:./TestResults/**/coverage.cobertura.xml -targetdir:coveragereport -reporttypes:Cobertura
+        dotnet tool install --global dotnet-reportgenerator-globaltool
+        export PATH="$PATH:/home/runner/.dotnet/tools"
+        reportgenerator -reports:"./TestResults/**/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Cobertura
+
+    - name: List coverage files
+      run: ls -R coveragereport
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
         files: ./coveragereport/Cobertura.xml
-
