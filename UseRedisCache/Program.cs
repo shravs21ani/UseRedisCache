@@ -1,7 +1,7 @@
 ﻿using StackExchange.Redis;
 using System.Text.Json;
 
-public class PatientPreference
+public class UserPreference
 {
     public string UserId { get; set; }
     public string CommunicationLanguage { get; set; }
@@ -39,7 +39,7 @@ class Program
         Console.WriteLine($"Loaded preferences after invalidation: {JsonSerializer.Serialize(prefs)}");
     }
 
-    private static async Task<PatientPreference> GetPatientPreferences(string userId)
+    private static async Task<UserPreference> GetPatientPreferences(string userId)
     {
         string cacheKey = $"patient:preferences:{userId}";
 
@@ -49,7 +49,7 @@ class Program
         {
             // Refresh sliding expiration
             await _cache.KeyExpireAsync(cacheKey, slidingExpiration);
-            return JsonSerializer.Deserialize<PatientPreference>(cachedValue);
+            return JsonSerializer.Deserialize<UserPreference>(cachedValue);
         }
 
         // Simulate DB fetch (replace with Cosmos DB logic)
@@ -67,10 +67,10 @@ class Program
         await _cache.KeyDeleteAsync(cacheKey);
     }
 
-    private static PatientPreference FetchFromDatabase(string userId)
+    private static UserPreference FetchFromDatabase(string userId)
     {
         Console.WriteLine($"Fetching from DB for user: {userId}");
-        return new PatientPreference
+        return new UserPreference
         {
             UserId = userId,
             CommunicationLanguage = "English",
