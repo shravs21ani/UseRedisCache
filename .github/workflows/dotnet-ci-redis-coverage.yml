@@ -1,30 +1,20 @@
-
 name: .NET 8 CI with Redis and Coverage
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    services:
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Setup .NET 8
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
@@ -32,37 +22,16 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --no-restore
 
-    - name: Wait for Redis to be ready
-      run: |
-        for i in {1..10}; do
-          if redis-cli -h localhost ping | grep -q PONG; then
-            echo "Redis is ready!"
-            break
-          fi
-          echo "Waiting for Redis..."
-          sleep 2
-        done
+    - name: Run tests with coverage
+      run: dotnet test --collect:"XPlat Code Coverage" --results-directory ./TestResults
 
-    - name: Run Tests with Coverage
-      run: |
-        dotnet test --no-restore --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=TestResults/Coverage/
-
-    - name: Upload Coverage Report to GitHub Artifacts
-      uses: actions/upload-artifact@v3
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
       with:
-        name: coverage-report
-        path: '**/TestResults/Coverage/coverage.cobertura.xml'
-
-    - name: Upload to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        # Uses the token from Repository Secrets
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: '**/TestResults/Coverage/coverage.cobertura.xml'
+        files: ./TestResults/**/coverage.cobertura.xml
+        flags: unittests
+        name: codecov-redis-net8
         fail_ci_if_error: true
-
-
-
-
