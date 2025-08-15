@@ -25,7 +25,7 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Run tests and collect coverage
-      run: dotnet test UseRedisCache/UseRedisCache.Tests/UseRedisCache.Tests.csproj --collect:"XPlat Code Coverage" --results-directory ./TestResults
+      run: dotnet test UseRedisCache.Tests/UseRedisCache.Tests.csproj --collect:"XPlat Code Coverage" --results-directory ./TestResults
 
     - name: Convert coverage to Cobertura format
       run: |
