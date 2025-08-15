@@ -3,16 +3,16 @@ using System.Text.Json;
 
 public class UserPreference
 {
-    public string UserId { get; set; }
-    public string CommunicationLanguage { get; set; }
-    public string CommunicationMode { get; set; }
+    public string? UserId { get; set; }
+    public string? CommunicationLanguage { get; set; }
+    public string? CommunicationMode { get; set; }
 }
 
 class Program
 {
     private static readonly string redisConnectionString = "localhost:6379"; // Change if using Azure Redis
     private static readonly TimeSpan slidingExpiration = TimeSpan.FromMinutes(10);
-    private static IDatabase _cache;
+    private static IDatabase _cache = default!;
 
     static async Task Main()
     {
@@ -49,7 +49,7 @@ class Program
         {
             // Refresh sliding expiration
             await _cache.KeyExpireAsync(cacheKey, slidingExpiration);
-            return JsonSerializer.Deserialize<UserPreference>(cachedValue);
+            return JsonSerializer.Deserialize<UserPreference>(cachedValue!) ?? new UserPreference();
         }
 
         // Simulate DB fetch (replace with Cosmos DB logic)
@@ -63,7 +63,7 @@ class Program
 
     private static async Task InvalidateCache(string userId)
     {
-        string cacheKey = $"user:preferences:{userId}";
+        string cacheKey = $"patient:preferences:{userId}";
         await _cache.KeyDeleteAsync(cacheKey);
     }
 
@@ -78,4 +78,3 @@ class Program
         };
     }
 }
-
