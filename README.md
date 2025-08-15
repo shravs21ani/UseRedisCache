@@ -3,7 +3,6 @@
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-blue)](https://dotnet.microsoft.com/)
 [![Redis](https://img.shields.io/badge/Redis-Local%20Setup-brightgreen)](https://redis.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/shravs21ani/UseRedisCache/branch/main/graph/badge.svg)](https://codecov.io/gh/shravs21ani/UseRedisCache)
 
 This project demonstrates how to use **Redis caching in a .NET 8 Console Application** to simulate **Azure Redis Cache** in a **cost-effective local development environment** using WSL and Ubuntu.
