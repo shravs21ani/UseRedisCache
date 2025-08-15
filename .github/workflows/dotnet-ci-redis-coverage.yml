@@ -24,14 +24,16 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
-    - name: Run tests with coverage
-      run: dotnet test --collect:"XPlat Code Coverage" --results-directory ./TestResults
+    - name: Run tests and collect coverage
+      run: dotnet test UseRedisCache/UseRedisCache.Tests/UseRedisCache.Tests.csproj --collect:"XPlat Code Coverage" --results-directory ./TestResults
+
+    - name: Convert coverage to Cobertura format
+      run: |
+          dotnet tool install --global dotnet-reportgenerator-globaltool
+          reportgenerator -reports:./TestResults/**/coverage.cobertura.xml -targetdir:coveragereport -reporttypes:Cobertura
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./TestResults/**/coverage.cobertura.xml
-        flags: unittests
-        name: codecov-redis-net8
-        fail_ci_if_error: true
+        files: ./coveragereport/Cobertura.xml
+
