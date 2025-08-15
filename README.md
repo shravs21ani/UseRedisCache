@@ -1,5 +1,5 @@
 
-# 🚀 UseRedisCache – Redis Caching with .NET 8
+# UseRedisCache – Redis Caching with .NET 8
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-blue)](https://dotnet.microsoft.com/)
 [![Redis](https://img.shields.io/badge/Redis-Local%20Setup-brightgreen)](https://redis.io/)
@@ -12,7 +12,7 @@ GitHub Repo: [shravs21ani/UseRedisCache](https://github.com/shravs21ani/UseRedis
 
 ---
 
-## 📦 Technologies Used
+## Technologies Used
 
 - .NET 8
 - StackExchange.Redis
@@ -24,9 +24,9 @@ GitHub Repo: [shravs21ani/UseRedisCache](https://github.com/shravs21ani/UseRedis
 
 ---
 
-## ✅ Steps to Run This Locally
+## Steps to Run This Locally
 
-### 🔧 1. Enable and Install WSL with Ubuntu
+### 1. Enable and Install WSL with Ubuntu
 
 Open **PowerShell as Administrator** and run:
 ```powershell
@@ -42,7 +42,7 @@ Restart your PC, then run the install command again.
 
 ---
 
-### 🐧 2. Launch Ubuntu & Install Redis
+### 2. Launch Ubuntu & Install Redis
 
 ```bash
 sudo apt update
@@ -58,7 +58,7 @@ redis-cli ping
 
 ---
 
-### 🧼 3. (Optional) Remove Unused WSL Distros
+### 3. (Optional) Remove Unused WSL Distros
 
 List all:
 ```powershell
@@ -72,7 +72,7 @@ wsl --unregister podman-machine-default
 
 ---
 
-### 💻 4. Clone and Run This .NET Project
+### 4. Clone and Run This .NET Project
 
 ```bash
 git clone https://github.com/shravs21ani/UseRedisCache.git
@@ -90,7 +90,7 @@ Then build and run the app.
 
 ---
 
-## ⚙️ Setup Script (Optional)
+## Setup Script (Optional)
 
 To quickly configure Redis on WSL Ubuntu:
 ```bash
@@ -107,7 +107,7 @@ bash install_redis.sh
 
 ---
 
-## 🧠 What the App Does
+## What the App Does
 
 - Tries to get user preference data from Redis.
 - If not cached, fetches simulated DB data and caches it.
@@ -116,7 +116,7 @@ bash install_redis.sh
 
 ---
 
-## 🔄 CI/CD Integration
+## CI/CD Integration
 
 - GitHub Actions workflow:
   - Restores dependencies
@@ -128,25 +128,25 @@ bash install_redis.sh
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
 ![Redis Local Walkthrough](Redis_Local_Cache_Complete_Walkthrough.png)
 
 ---
 
-## 📝 Notes
+## Notes
 
 - This simulates Azure Redis in local environments to **cut cloud costs during development**.
 - Helps teams test caching logic before pushing to production cloud environments.
 
 ---
 
-## 📊 Coverage
+## Coverage
 
 Coverage is uploaded and tracked via [Codecov](https://codecov.io/gh/shravs21ani/UseRedisCache)
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
